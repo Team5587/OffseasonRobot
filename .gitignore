@@ -1,7 +1,10 @@
 bin/
-.project
-gradlew
 gradle/
+build/
+.gradle/
+.vscode/
+gradlew
+.project
 build.xml
 build.properties
 .classpath

@@ -3,19 +3,24 @@ package org.usfirst.frc.team5587.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team5587.robot.Robot;
+import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
+
 
 /**
  *
  */
-public class ExampleCommand extends Command {
-	public ExampleCommand() {
+public class PneumaticsOverhead extends Command {
+    private Pneumatics p;
+	public PneumaticsOverhead() {
 		// Use requires() here to declare subsystem dependencies
-		//requires(Robot.exampleSubsystem);
+		requires( Robot.pneumatics );
+        p = Robot.pneumatics;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+        p.enableClosedLoop(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
