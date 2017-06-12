@@ -3,6 +3,7 @@ gradle/
 build/
 .gradle/
 .vscode/
+.settings/
 gradlew
 .project
 build.xml
