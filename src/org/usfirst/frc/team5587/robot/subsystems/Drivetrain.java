@@ -18,7 +18,6 @@ public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
     private CANTalon leftFront, leftBack, rightFront, rightBack;
-    private Encoder leftEncoder, rightEncoder;
     private Pneumatics p;
     public RobotDrive drivetrain;
 
@@ -37,9 +36,6 @@ public class Drivetrain extends Subsystem {
         leftBack = new CANTalon( RobotMap.LEFT_BACK );
         rightFront = new CANTalon( RobotMap.RIGHT_FRONT );
         rightBack = new CANTalon( RobotMap.RIGHT_BACK );
-
-        leftEncoder = new Encoder( RobotMap.LEFT_ENCODER, RobotMap.LEFT_ENCODER+1 );
-        rightEncoder = new Encoder( RobotMap.RIGHT_ENCODER, RobotMap.RIGHT_ENCODER+1 );
         
         p = Robot.pneumatics;
         

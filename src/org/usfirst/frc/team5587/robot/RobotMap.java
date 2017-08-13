@@ -18,19 +18,13 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 
 	//Motor Controllers
-	public static int LEFT_FRONT = 2;
+	public static int LEFT_FRONT = 1;
+	public static int RIGHT_FRONT = 2;
 	public static int LEFT_BACK = 3;
-	public static int RIGHT_FRONT = 4;
-	public static int RIGHT_BACK = 5;
+	public static int RIGHT_BACK = 4;
 
-	//Encoders
-	public static int LEFT_ENCODER = 1; //and 2
-	public static int RIGHT_ENCODER = 3; //and 4
-	
 	//Pneumatics
-	public static int LEFT_SHIFTER_A = 1;
-	public static int LEFT_SHIFTER_B = 2;
-	public static int RIGHT_SHIFTER_A = 3;
-	public static int RIGHT_SHIFTER_B = 4;
+	public static int SHIFTER_A = 1;
+	public static int SHIFTER_B = 2;
 	
 }

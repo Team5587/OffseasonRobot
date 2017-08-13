@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-import org.usfirst.frc.team5587.robot.commands.PneumaticsOverhead;
 import org.usfirst.frc.team5587.robot.RobotMap;
 
 /**
@@ -21,13 +20,12 @@ public class Pneumatics extends Subsystem {
 
     public Pneumatics(){
         comp = new Compressor(0);
-        shifter = new DoubleSolenoid(RobotMap.LEFT_SHIFTER_A, RobotMap.LEFT_SHIFTER_B);
+        shifter = new DoubleSolenoid(RobotMap.SHIFTER_A, RobotMap.SHIFTER_B);
     }
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand( new PneumaticsOverhead() );
 	}
 
     public void enableClosedLoop(boolean enabled){

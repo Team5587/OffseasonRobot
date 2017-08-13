@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team5587.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,9 +20,11 @@ import org.usfirst.frc.team5587.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
 	public static Pneumatics pneumatics;
+	public static Drivetrain drivetrain;
 	public static OI oi;
 
 	Command autonomousCommand;
+	Command teleopCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -33,10 +34,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		pneumatics = new Pneumatics();
+		drivetrain = new Drivetrain();
 		oi = new OI();
 		chooser.addDefault("Default Auto", null);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		teleopCommand = new SplitJoystickDrive();
 	}
 
 	/**
@@ -97,6 +100,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		teleopCommand.start();
 	}
 
 	/**
