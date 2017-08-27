@@ -6,6 +6,7 @@ import org.usfirst.frc.team5587.robot.OI;
 import org.usfirst.frc.team5587.robot.Robot;
 import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
 
+
 /**
  *
  */
@@ -30,6 +31,16 @@ public class SplitJoystickDrive extends Command {
 	@Override
 	protected void execute() {
 		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1), -oi.stick.getRawAxis(4));
+		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
+			drivetrain.shiftInto( drivetrain.gear.Disengaged );
+		}
+		else if( oi.stick.getRawButton(4) ){
+			drivetrain.shiftInto( drivetrain.gear.Low );
+		}
+		else if( oi.stick.getRawButton(5) ){
+			drivetrain.shiftInto( drivetrain.gear.High );
+		}
+		else{}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
