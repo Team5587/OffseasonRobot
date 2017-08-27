@@ -1,4 +1,5 @@
 bin/
+dist/
 gradle/
 build/
 .gradle/
@@ -9,4 +10,3 @@ gradlew
 build.xml
 build.properties
 .classpath
-build.gradle

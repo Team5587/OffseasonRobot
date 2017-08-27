@@ -21,6 +21,7 @@ import org.usfirst.frc.team5587.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
 	public static Pneumatics pneumatics;
+	public static Drivetrain drivetrain;
 	public static OI oi;
 
 	Command autonomousCommand;
