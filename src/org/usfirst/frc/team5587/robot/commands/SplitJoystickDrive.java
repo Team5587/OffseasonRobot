@@ -2,30 +2,34 @@ package org.usfirst.frc.team5587.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team5587.robot.OI;
 import org.usfirst.frc.team5587.robot.Robot;
-import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
 
 /**
  *
  */
-public class PneumaticsOverhead extends Command {
-	private Pneumatics p;
 
-	public PneumaticsOverhead() {
+public class SplitJoystickDrive extends Command {
+	OI oi;
+	Drivetrain drivetrain;
+	public SplitJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.pneumatics);
-		p = Robot.pneumatics;
+		//requires(Robot.exampleSubsystem);
+		requires(Robot.drivetrain);
+		drivetrain = Robot.drivetrain;
+		oi = Robot.oi;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		p.enableClosedLoop(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1), -oi.stick.getRawAxis(4));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

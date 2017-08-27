@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team5587.robot.RobotMap;
+import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
 
 /**
  *
@@ -44,7 +45,6 @@ public class Drivetrain extends Subsystem {
 
 		drivetrain = new RobotDrive(leftFront, leftBack, rightFront, rightBack);
 	}
-
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -61,13 +61,13 @@ public class Drivetrain extends Subsystem {
 	public void shiftInto(gear g) {
 		Value v;
 	       	switch(g){
-		case gear.High:
+		case High:
 			v = Value.kForward;
 			break;
-		case gear.Low:
+		case Low:
 			v = Value.kReverse;
 			break;
-		case gear.Disengaged;
+		case Disengaged:
 			v = Value.kOff;
 			break;
 		}
