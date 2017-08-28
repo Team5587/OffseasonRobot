@@ -30,8 +30,6 @@ public class Drivetrain extends Subsystem {
 		High, Low, Disengaged
 	}
 
-	gear leftGear, rightGear;
-
 	public Drivetrain() {
 		leftFront = new CANTalon(RobotMap.LEFT_FRONT);
 		leftBack = new CANTalon(RobotMap.LEFT_BACK);
@@ -59,7 +57,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void shiftInto(gear g) {
-		Value v;
+		Value v = Value.kOff;
 	       	switch(g){
 		case High:
 			v = Value.kForward;

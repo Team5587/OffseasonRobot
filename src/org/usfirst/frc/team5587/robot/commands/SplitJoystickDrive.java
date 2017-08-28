@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5587.robot.OI;
 import org.usfirst.frc.team5587.robot.Robot;
 import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.gear;
 
 
 /**
@@ -32,13 +33,13 @@ public class SplitJoystickDrive extends Command {
 	protected void execute() {
 		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1), -oi.stick.getRawAxis(4));
 		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
-			drivetrain.shiftInto( drivetrain.gear.Disengaged );
+			drivetrain.shiftInto( gear.Disengaged );
 		}
 		else if( oi.stick.getRawButton(4) ){
-			drivetrain.shiftInto( drivetrain.gear.Low );
+			drivetrain.shiftInto( gear.Low );
 		}
 		else if( oi.stick.getRawButton(5) ){
-			drivetrain.shiftInto( drivetrain.gear.High );
+			drivetrain.shiftInto( gear.High );
 		}
 		else{}
 	}
