@@ -9,4 +9,5 @@ gradlew
 .project
 build.xml
 build.properties
+gradle.properties
 .classpath
