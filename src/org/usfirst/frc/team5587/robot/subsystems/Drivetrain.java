@@ -2,9 +2,9 @@ package org.usfirst.frc.team5587.robot.subsystems;
 
 import org.usfirst.frc.team5587.robot.Robot;
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,7 +18,6 @@ public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private CANTalon leftFront, leftBack, rightFront, rightBack;
-	private Encoder leftEncoder, rightEncoder;
 	private Pneumatics p;
 	public RobotDrive drivetrain;
 
@@ -33,15 +32,22 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain() {
 		leftFront = new CANTalon(RobotMap.LEFT_FRONT);
 		leftBack = new CANTalon(RobotMap.LEFT_BACK);
+
 		rightFront = new CANTalon(RobotMap.RIGHT_FRONT);
 		rightBack = new CANTalon(RobotMap.RIGHT_BACK);
 
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER, RobotMap.LEFT_ENCODER + 1);
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER, RobotMap.RIGHT_ENCODER + 1);
+		leftFront.setFeedbackDevice( FeedbackDevice.QuadEncoder);
+		rightFront.setFeedbackDevice( FeedbackDevice.QuadEncoder);
+
+		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
+		leftBack.set(leftFront.getDeviceID());
+		
+		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
+		rightBack.set(rightFront.getDeviceID());
 
 		p = Robot.pneumatics;
 
-		drivetrain = new RobotDrive(leftFront, leftBack, rightFront, rightBack);
+		drivetrain = new RobotDrive(leftFront, rightFront);
 	}
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -84,5 +90,10 @@ public class Drivetrain extends Subsystem {
 		} else {
 			return gear.Disengaged;
 		}
+	}
+
+	public void printEncoders(){
+		System.out.println("Left Encoder Pos:" + leftFront.getEncPosition() + " Vel: " + leftFront.getEncVelocity());
+		System.out.println("Right Encoder Pos:" + rightFront.getEncPosition() + " Vel: " + rightFront.getEncVelocity());
 	}
 }

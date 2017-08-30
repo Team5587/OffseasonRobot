@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5587.robot.commands.*;
+import org.usfirst.frc.team5587.robot.commands.auto.DriveStraightForever;
 import org.usfirst.frc.team5587.robot.subsystems.*;
 
 /**
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
 		pneumatics = new Pneumatics();
 		drivetrain = new Drivetrain();
 		oi = new OI();
-		chooser.addDefault("Default Auto", null);
+		chooser.addDefault("Default Auto", new DriveStraightForever());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		teleopCommand = new SplitJoystickDrive();

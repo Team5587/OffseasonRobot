@@ -5,6 +5,7 @@ build/
 .gradle/
 .vscode/
 .settings/
+.externalToolBuilders/
 gradlew
 .project
 build.xml
