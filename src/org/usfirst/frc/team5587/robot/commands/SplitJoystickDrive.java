@@ -15,6 +15,7 @@ import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.gear;
 public class SplitJoystickDrive extends Command {
 	OI oi;
 	Drivetrain drivetrain;
+	private double kSense = .7;
 	public SplitJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.exampleSubsystem);
@@ -31,7 +32,8 @@ public class SplitJoystickDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1), -oi.stick.getRawAxis(4));
+		//kSense = (oi.stick.getRawAxis(2)+1)/2.0;
+		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*kSense);
 		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
 			drivetrain.shiftInto( gear.Disengaged );
 		}
