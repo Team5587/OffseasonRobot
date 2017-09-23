@@ -1,8 +1,9 @@
 package org.usfirst.frc.team5587.robot.subsystems;
 
 import org.usfirst.frc.team5587.robot.Robot;
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.MotorControl.*;
+import com.ctre.MotorControl.CANTalon;
+import com.ctre.MotorControl.SmartMotorController.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -24,6 +25,8 @@ public class Drivetrain extends Subsystem {
 	// 1 / ( Correction constant * Stage 1 * Stage 2 * Wheel Diameter * pi )
 	private double kDistHighGear = 1 / (40 / 12D * 44 / 40D * 6 * Math.PI);
 	private double kDistLowGear = 1 / (40 / 12D * 60 / 24D * 6 * Math.PI);
+
+	private double kMaxVelocity = 0;
 
 	public enum gear {
 		High, Low, Disengaged
@@ -59,7 +62,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void arcadeVelocityControl(double power, double curve) {
-
+		
 	}
 
 	public void shiftInto(gear g) {
