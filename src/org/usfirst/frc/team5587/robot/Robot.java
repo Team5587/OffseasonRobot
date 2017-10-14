@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 import org.usfirst.frc.team5587.robot.commands.*;
 import org.usfirst.frc.team5587.robot.commands.auto.DriveStraightForever;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static Pneumatics pneumatics;
 	public static Drivetrain drivetrain;
 	public static OI oi;
+	public static PowerDistributionPanel pdp;
 
 	Command autonomousCommand;
 	Command teleopCommand;
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		pneumatics = new Pneumatics();
 		drivetrain = new Drivetrain();
+		pdp = new PowerDistributionPanel();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new DriveStraightForever());
 		// chooser.addObject("My Auto", new MyAutoCommand());

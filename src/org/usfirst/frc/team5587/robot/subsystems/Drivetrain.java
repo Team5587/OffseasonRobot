@@ -8,6 +8,7 @@ import com.ctre.MotorControl.SmartMotorController.FeedbackDevice;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import org.usfirst.frc.team5587.robot.RobotMap;
 import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
@@ -48,7 +49,7 @@ public class Drivetrain extends Subsystem {
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
 		rightBack.set(rightFront.getDeviceID());
 
-		p = Robot.pneumatics;
+		//p = Robot.pneumatics;
 
 		drivetrain = new RobotDrive(leftFront, rightFront);
 	}
@@ -59,6 +60,10 @@ public class Drivetrain extends Subsystem {
 
 	public void arcadeDrive(double power, double curve) {
 		drivetrain.arcadeDrive(power, curve);
+	}
+
+	public void arcadeDrive(double power, double curve, boolean squaredInputs) {
+		drivetrain.arcadeDrive(power, curve, squaredInputs);
 	}
 
 	public void arcadeVelocityControl(double power, double curve) {
@@ -98,5 +103,12 @@ public class Drivetrain extends Subsystem {
 	public void printEncoders(){
 		System.out.println("Left Encoder Pos:" + leftFront.getEncPosition() + " Vel: " + leftFront.getEncVelocity());
 		System.out.println("Right Encoder Pos:" + rightFront.getEncPosition() + " Vel: " + rightFront.getEncVelocity());
+	}
+
+	public void showCurrents(){
+		SmartDashboard.putNumber("PDP 0: ", Robot.pdp.getCurrent(0));
+		SmartDashboard.putNumber("PDP 1: ", Robot.pdp.getCurrent(1));
+		SmartDashboard.putNumber("PDP 2: ", Robot.pdp.getCurrent(2));
+		SmartDashboard.putNumber("PDP 3: ", Robot.pdp.getCurrent(3));
 	}
 }
