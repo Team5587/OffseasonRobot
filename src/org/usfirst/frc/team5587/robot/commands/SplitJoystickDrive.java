@@ -1,23 +1,27 @@
 package org.usfirst.frc.team5587.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5587.robot.OI;
 import org.usfirst.frc.team5587.robot.Robot;
 import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.gear;
+import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.Gear;
+import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
 
 
 public class SplitJoystickDrive extends Command {
 	OI oi;
-	Drivetrain drivetrain;
+	private Drivetrain drivetrain;
+	private Pneumatics p;
 	private double kSense = .75;
 	public SplitJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.exampleSubsystem);
 		requires(Robot.drivetrain);
 		drivetrain = Robot.drivetrain;
+		p = Robot.pneumatics;
 		oi = Robot.oi;
 	}
 
@@ -34,17 +38,18 @@ public class SplitJoystickDrive extends Command {
 		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*(kSense*1.3), false);
 		
 		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
-			drivetrain.shiftInto( gear.Disengaged );
+			drivetrain.shiftInto( Gear.Disengaged );
 		}
 		else if( oi.stick.getRawButton(4) ){
-			drivetrain.shiftInto( gear.Low );
+			drivetrain.shiftInto( Gear.Low );
 		}
 		else if( oi.stick.getRawButton(5) ){
-			drivetrain.shiftInto( gear.High );
+			drivetrain.shiftInto( Gear.High );
 		}
 		else{}
 
 		drivetrain.showCurrents();
+		//SmartDashboard.putString("Gear: ", drivetrain.getGearString());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

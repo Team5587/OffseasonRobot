@@ -29,8 +29,16 @@ public class Drivetrain extends Subsystem {
 
 	private double kMaxVelocity = 0;
 
-	public enum gear {
-		High, Low, Disengaged
+	public enum Gear {
+		High(Value.kReverse), 
+		Low(Value.kForward), 
+		Disengaged(Value.kOff);
+
+		public Value value;
+
+		Gear(Value value){
+			this.value = value;
+		}
 	}
 
 	public Drivetrain() {
@@ -49,7 +57,7 @@ public class Drivetrain extends Subsystem {
 		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
 		rightBack.set(rightFront.getDeviceID());
 
-		//p = Robot.pneumatics;
+		p = Robot.pneumatics;
 
 		drivetrain = new RobotDrive(leftFront, rightFront);
 	}
@@ -70,33 +78,31 @@ public class Drivetrain extends Subsystem {
 		
 	}
 
-	public void shiftInto(gear g) {
-		Value v = Value.kOff;
-	       	switch(g){
-		case High:
-			v = Value.kForward;
-			break;
-		case Low:
-			v = Value.kReverse;
-			break;
-		case Disengaged:
-			v = Value.kOff;
-			break;
-		}
-		p.setSolenoid(p.shifter, v);
+	public void shiftInto(Gear g) {
+		p.setSolenoid(p.shifter, g.value);
 	}
 
 	// public double getDistance(){
 	// leftEncoder.set
 	// }
 
-	public gear getGear() {
+	public Gear getGear() {
 		if (p.shifter.get() == Value.kForward) {
-			return gear.High;
+			return Gear.High;
 		} else if (p.shifter.get() == Value.kReverse) {
-			return gear.Low;
+			return Gear.Low;
 		} else {
-			return gear.Disengaged;
+			return Gear.Disengaged;
+		}
+	}
+
+	public String getGearString() {
+		if (p.shifter.get() == Value.kForward) {
+			return "High";
+		} else if (p.shifter.get() == Value.kReverse) {
+			return "Low";
+		} else {
+			return "Disengaged";
 		}
 	}
 

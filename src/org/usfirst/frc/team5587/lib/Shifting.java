@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5587.lib;
 
 import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.Gear;
 
 public class Shifting {
 
@@ -10,5 +11,5 @@ public class Shifting {
 		this.d = d;
 	}
 
-	Drivetrain.gear g = d.getGear();
+	Gear g = d.getGear();
 }
