@@ -12,3 +12,4 @@ build.xml
 build.properties
 gradle.properties
 .classpath
+.idea/
