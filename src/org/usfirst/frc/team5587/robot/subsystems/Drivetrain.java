@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5587.robot.subsystems;
+ package org.usfirst.frc.team5587.robot.subsystems;
 
 import org.usfirst.frc.team5587.robot.Robot;
 import com.ctre.MotorControl.*;
@@ -23,11 +23,17 @@ public class Drivetrain extends Subsystem {
 	private Pneumatics p;
 	public RobotDrive drivetrain;
 
-	// 1 / ( Correction constant * Stage 1 * Stage 2 * Wheel Diameter * pi )
-	private double kDistHighGear = 1 / (40 / 12D * 44 / 40D * 6 * Math.PI);
-	private double kDistLowGear = 1 / (40 / 12D * 60 / 24D * 6 * Math.PI);
+	// 1 / ( Stage 1 * Stage 2 * Wheel Diameter * pi )
+	//For each inch moved, multiply by the constant to get rotations of cim
+	private double kDistHighGear = 1 / ((40 / 12D) * (44 / 40D) * 6 * Math.PI);
+	private double kDistLowGear = 1 / ((40 / 12D) * (60 / 24D) * 6 * Math.PI);
 
 	private double kMaxVelocity = 0;
+	private double calDist;
+	private Gear calGear;
+	private double rightStartDist;
+	private double leftStartDist;
+	
 
 	public enum Gear {
 		High(Value.kReverse), 
@@ -44,7 +50,6 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain() {
 		leftFront = new CANTalon(RobotMap.LEFT_FRONT);
 		leftBack = new CANTalon(RobotMap.LEFT_BACK);
-
 		rightFront = new CANTalon(RobotMap.RIGHT_FRONT);
 		rightBack = new CANTalon(RobotMap.RIGHT_BACK);
 
@@ -117,4 +122,26 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("PDP 2: ", Robot.pdp.getCurrent(2));
 		SmartDashboard.putNumber("PDP 3: ", Robot.pdp.getCurrent(3));
 	}
+
+	public void setPIDF(CanTalon[] talons, double kP, double kI, double kD, double kF){
+		for(CanTalon talon: talons){
+			talon.setPIDF(kP, kI, kD, kF);
+		}
+	}
+
+	
+
+	/**
+	public void startCalibration(double calDist){
+		leftStartDist = leftFront.getEncPosition();
+		rightStartDist = rightFront.getEncPosition();
+		this.calDist = calDist;
+		this.calGear = getGear();
+	}
+	public void stopCalibration(){
+		leftDiff = leftFront.getEncPosition()-leftStartDist;
+		rightDiff = rightFront.getEncPosition()-rightStartDist;
+		System.out.println( "Gear calibrated: " + calGear.toString() + " Left: " + leftDiff/calDist + "Right: " + rightDiff/calDist );
+	}
+	*/
 }

@@ -35,15 +35,15 @@ public class SplitJoystickDrive extends Command {
 	@Override
 	protected void execute() {
 		kSense = SmartDashboard.getNumber("kSense", 0.3);
-		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*(kSense*1.3), false);
+		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*kSense, false);
 		
 		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
 			drivetrain.shiftInto( Gear.Disengaged );
 		}
-		else if( oi.stick.getRawButton(4) ){
+		else if( oi.stick.getRawButton(5) ){
 			drivetrain.shiftInto( Gear.Low );
 		}
-		else if( oi.stick.getRawButton(5) ){
+		else if( oi.stick.getRawButton(6) ){
 			drivetrain.shiftInto( Gear.High );
 		}
 		else{}
