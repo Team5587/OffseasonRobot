@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 import org.usfirst.frc.team5587.robot.commands.*;
-import org.usfirst.frc.team5587.robot.commands.auto.DriveStraightForever;
+import org.usfirst.frc.team5587.robot.commands.auto.*;
 import org.usfirst.frc.team5587.robot.subsystems.*;
 
 /**
@@ -40,8 +40,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		pdp = new PowerDistributionPanel();
 		oi = new OI();
-		chooser.addDefault("Default Auto", new DriveStraightForever());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addObject("Default Auto", new DriveStraightForever());
 		SmartDashboard.putData("Auto mode", chooser);
 		teleopCommand = new SplitJoystickDrive();
 		pneumatics.enableClosedLoop(true);

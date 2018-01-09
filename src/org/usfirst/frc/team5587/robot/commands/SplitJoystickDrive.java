@@ -1,23 +1,27 @@
 package org.usfirst.frc.team5587.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5587.robot.OI;
 import org.usfirst.frc.team5587.robot.Robot;
 import org.usfirst.frc.team5587.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.gear;
+import org.usfirst.frc.team5587.robot.subsystems.Drivetrain.Gear;
+import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
 
 
 public class SplitJoystickDrive extends Command {
 	OI oi;
-	Drivetrain drivetrain;
+	private Drivetrain drivetrain;
+	private Pneumatics p;
 	private double kSense = .75;
 	public SplitJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.exampleSubsystem);
 		requires(Robot.drivetrain);
 		drivetrain = Robot.drivetrain;
+		p = Robot.pneumatics;
 		oi = Robot.oi;
 	}
 

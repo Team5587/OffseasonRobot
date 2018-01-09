@@ -39,18 +39,4 @@ public class Pneumatics extends Subsystem {
 	public void setSolenoid(DoubleSolenoid s, Value value) {
 		s.set(value);
 	}
-
-	public void setSolenoid(DoubleSolenoid s, int value) {
-		switch (value) {
-		case -1:
-			s.set(Value.kReverse);
-			break;
-		case 0:
-			s.set(Value.kOff);
-			break;
-		case 1:
-			s.set(Value.kForward);
-			break;
-		}
-	}
 }
