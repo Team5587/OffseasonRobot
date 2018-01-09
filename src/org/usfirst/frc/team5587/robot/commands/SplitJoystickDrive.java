@@ -25,6 +25,7 @@ public class SplitJoystickDrive extends Command {
 	@Override
 	protected void initialize() {
 		SmartDashboard.putNumber("kSense", .3);
+		System.out.println("Starting Teleop");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -33,18 +34,21 @@ public class SplitJoystickDrive extends Command {
 		kSense = SmartDashboard.getNumber("kSense", 0.3);
 		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*(kSense*1.3), false);
 		
-		if( oi.stick.getRawButton(4) && oi.stick.getRawButton(5) ){
+		if( oi.stick.getRawButton(5) && oi.stick.getRawButton(6) ){
 			drivetrain.shiftInto( gear.Disengaged );
-		}
-		else if( oi.stick.getRawButton(4) ){
-			drivetrain.shiftInto( gear.Low );
+			System.out.println("Shifted to Disengaged");
 		}
 		else if( oi.stick.getRawButton(5) ){
+			drivetrain.shiftInto( gear.Low );
+			System.out.println("Shifted to Low");
+		}
+		else if( oi.stick.getRawButton(6) ){
 			drivetrain.shiftInto( gear.High );
+			System.out.println("Shifted to High");
 		}
 		else{}
 
-		drivetrain.showCurrents();
+		//drivetrain.showCurrents();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
