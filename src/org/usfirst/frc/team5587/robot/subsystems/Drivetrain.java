@@ -1,9 +1,8 @@
  package org.usfirst.frc.team5587.robot.subsystems;
 
 import org.usfirst.frc.team5587.robot.Robot;
-import com.ctre.MotorControl.*;
-import com.ctre.MotorControl.CANTalon;
-import com.ctre.MotorControl.SmartMotorController.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -19,7 +18,7 @@ import org.usfirst.frc.team5587.robot.subsystems.Pneumatics;
 public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	private CANTalon leftFront, leftBack, rightFront, rightBack;
+	private WPI_TalonSRX leftFront, leftBack, rightFront, rightBack;
 	private Pneumatics p;
 	public RobotDrive drivetrain;
 
@@ -48,19 +47,17 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public Drivetrain() {
-		leftFront = new CANTalon(RobotMap.LEFT_FRONT);
-		leftBack = new CANTalon(RobotMap.LEFT_BACK);
-		rightFront = new CANTalon(RobotMap.RIGHT_FRONT);
-		rightBack = new CANTalon(RobotMap.RIGHT_BACK);
+		leftFront = new WPI_TalonSRX(RobotMap.LEFT_FRONT);
+		leftBack = new WPI_TalonSRX(RobotMap.LEFT_BACK);
 
-		leftFront.setFeedbackDevice( FeedbackDevice.QuadEncoder);
-		rightFront.setFeedbackDevice( FeedbackDevice.QuadEncoder);
+		rightFront = new WPI_TalonSRX(RobotMap.RIGHT_FRONT);
+		rightBack = new WPI_TalonSRX(RobotMap.RIGHT_BACK);
 
-		leftBack.changeControlMode(CANTalon.TalonControlMode.Follower);
-		leftBack.set(leftFront.getDeviceID());
-		
-		rightBack.changeControlMode(CANTalon.TalonControlMode.Follower);
-		rightBack.set(rightFront.getDeviceID());
+		leftFront.configSelectedFeedbackSensor( FeedbackDevice.QuadEncoder, 0, 0);
+		rightFront.configSelectedFeedbackSensor( FeedbackDevice.QuadEncoder, 0, 0);
+
+		leftBack.set(ControlMode.Follower, leftFront.getDeviceID());
+		rightBack.set(ControlMode.Follower, rightFront.getDeviceID());
 
 		p = Robot.pneumatics;
 
@@ -112,8 +109,8 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void printEncoders(){
-		System.out.println("Left Encoder Pos:" + leftFront.getEncPosition() + " Vel: " + leftFront.getEncVelocity());
-		System.out.println("Right Encoder Pos:" + rightFront.getEncPosition() + " Vel: " + rightFront.getEncVelocity());
+		System.out.println("Left Encoder Pos:" + leftFront.getSelectedSensorPosition(0) + " Vel: " + leftFront.getSelectedSensorVelocity(0));
+		System.out.println("Right Encoder Pos:" + rightFront.getSelectedSensorPosition(0) + " Vel: " + rightFront.getSelectedSensorVelocity(0));
 	}
 
 	public void showCurrents(){
@@ -122,14 +119,6 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("PDP 2: ", Robot.pdp.getCurrent(2));
 		SmartDashboard.putNumber("PDP 3: ", Robot.pdp.getCurrent(3));
 	}
-
-	public void setPIDF(CanTalon[] talons, double kP, double kI, double kD, double kF){
-		for(CanTalon talon: talons){
-			talon.setPIDF(kP, kI, kD, kF);
-		}
-	}
-
-	
 
 	/**
 	public void startCalibration(double calDist){

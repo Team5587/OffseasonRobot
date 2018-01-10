@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Default Auto", new DriveStraightForever());
 		SmartDashboard.putData("Auto mode", chooser);
 		teleopCommand = new SplitJoystickDrive();
-		pneumatics.enableClosedLoop(false);
+		pneumatics.enableClosedLoop(true);
 	}
 
 	/**
