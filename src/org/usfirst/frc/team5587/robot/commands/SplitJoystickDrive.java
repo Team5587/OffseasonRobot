@@ -15,7 +15,7 @@ public class SplitJoystickDrive extends Command {
 	OI oi;
 	private Drivetrain drivetrain;
 	private Pneumatics p;
-	private double kSense = .75;
+	private double mSense = .75;
 	public SplitJoystickDrive() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.exampleSubsystem);
@@ -28,31 +28,31 @@ public class SplitJoystickDrive extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		SmartDashboard.putNumber("kSense", .3);
+		SmartDashboard.putNumber("kSense", 1);
 		System.out.println("Starting Teleop");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		kSense = SmartDashboard.getNumber("kSense", 0.3);
-		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*kSense, -oi.stick.getRawAxis(0)*kSense, false);
+		mSense = SmartDashboard.getNumber("Sensitivity", 1.0);
+		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*mSense, oi.stick.getRawAxis(4)*mSense, false);
 		
 		if( oi.stick.getRawButton(5) && oi.stick.getRawButton(6) ){
-			drivetrain.shiftInto( gear.Disengaged );
+			drivetrain.shiftInto( Gear.Disengaged );
 			System.out.println("Shifted to Disengaged");
 		}
 		else if( oi.stick.getRawButton(5) ){
-			drivetrain.shiftInto( gear.Low );
+			drivetrain.shiftInto( Gear.Low );
 			System.out.println("Shifted to Low");
 		}
 		else if( oi.stick.getRawButton(6) ){
-			drivetrain.shiftInto( gear.High );
+			drivetrain.shiftInto( Gear.High );
 			System.out.println("Shifted to High");
 		}
 		else{}
 
-		//drivetrain.showCurrents();
+		drivetrain.graphEncoders();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

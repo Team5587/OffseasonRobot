@@ -1,7 +1,7 @@
 plugins {
     id "java"
     id "eclipse"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.07"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.01.11"
 }
 
 sourceSets {
@@ -30,7 +30,7 @@ dependencies {
 
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest("org.frc5587.robot2018.Robot")
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest("org.usfirst.frc.team5587.robot.Robot")
 }
 
 task wrapper(type: Wrapper) {

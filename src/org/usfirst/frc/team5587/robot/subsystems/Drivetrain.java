@@ -4,9 +4,10 @@ import org.usfirst.frc.team5587.robot.Robot;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import org.usfirst.frc.team5587.robot.RobotMap;
@@ -20,7 +21,7 @@ public class Drivetrain extends Subsystem {
 	// here. Call these from Commands.
 	private WPI_TalonSRX leftFront, leftBack, rightFront, rightBack;
 	private Pneumatics p;
-	public RobotDrive drivetrain;
+	public DifferentialDrive drivetrain;
 
 	// 1 / ( Stage 1 * Stage 2 * Wheel Diameter * pi )
 	//For each inch moved, multiply by the constant to get rotations of cim
@@ -61,7 +62,7 @@ public class Drivetrain extends Subsystem {
 
 		p = Robot.pneumatics;
 
-		drivetrain = new RobotDrive(leftFront, rightFront);
+		drivetrain = new DifferentialDrive(leftFront, rightFront);
 	}
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -111,6 +112,13 @@ public class Drivetrain extends Subsystem {
 	public void printEncoders(){
 		System.out.println("Left Encoder Pos:" + leftFront.getSelectedSensorPosition(0) + " Vel: " + leftFront.getSelectedSensorVelocity(0));
 		System.out.println("Right Encoder Pos:" + rightFront.getSelectedSensorPosition(0) + " Vel: " + rightFront.getSelectedSensorVelocity(0));
+	}
+
+	public void graphEncoders(){
+		SmartDashboard.putNumber("Left Encoder Pos: ", leftFront.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Left Encoder Vel: ",leftFront.getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Right Encoder Pos: ", rightFront.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Encoder Vel: ", rightFront.getSelectedSensorVelocity(0));
 	}
 
 	public void showCurrents(){
