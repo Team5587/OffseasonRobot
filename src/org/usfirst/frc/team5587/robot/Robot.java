@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5587.robot;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -7,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 import org.usfirst.frc.team5587.robot.commands.*;
 import org.usfirst.frc.team5587.robot.commands.auto.*;
@@ -25,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static OI oi;
 	public static PowerDistributionPanel pdp;
+	public static I2C i2c;
 
 	Command autonomousCommand;
 	Command teleopCommand;
@@ -40,6 +43,9 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		pdp = new PowerDistributionPanel();
 		oi = new OI();
+
+		i2c = new I2C( Port.kMXP, 8);
+
 		chooser.addObject("Default Auto", new DriveStraightForever());
 		SmartDashboard.putData("Auto mode", chooser);
 		teleopCommand = new SplitJoystickDrive();
@@ -113,6 +119,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		byte[] b = {72};
+		byte[] c = new byte[1];
+		i2c.transaction(b, 1, c, 0);
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
 	}
 
 	/**
