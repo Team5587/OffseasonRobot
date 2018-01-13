@@ -30,13 +30,14 @@ public class SplitJoystickDrive extends Command {
 	protected void initialize() {
 		SmartDashboard.putNumber("kSense", 1);
 		System.out.println("Starting Teleop");
+		SmartDashboard.putData("Reset Encoders", new ResetEncoders());
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		mSense = SmartDashboard.getNumber("Sensitivity", 1.0);
-		drivetrain.arcadeDrive( -oi.stick.getRawAxis(1)*mSense, oi.stick.getRawAxis(4)*mSense, false);
+		drivetrain.curvatureDrive( -oi.stick.getRawAxis(1)*mSense, oi.stick.getRawAxis(4)*mSense, false);
 		
 		if( oi.stick.getRawButton(5) && oi.stick.getRawButton(6) ){
 			drivetrain.shiftInto( Gear.Disengaged );
@@ -53,6 +54,7 @@ public class SplitJoystickDrive extends Command {
 		else{}
 
 		drivetrain.graphEncoders();
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

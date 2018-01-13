@@ -24,11 +24,6 @@ public class RobotMap {
 	public static int LEFT_BACK = 3;
 	public static int RIGHT_BACK = 4;
 
-
-	// Encoders
-	public static int LEFT_ENCODER = 1; // and 2
-	public static int RIGHT_ENCODER = 3; // and 4
-
 	// Pneumatics
 	public static int SHIFTER_A = 0;
 	public static int SHIFTER_B = 1;

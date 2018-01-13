@@ -23,17 +23,20 @@ public class Drivetrain extends Subsystem {
 	private Pneumatics p;
 	public DifferentialDrive drivetrain;
 
-	// 1 / ( Stage 1 * Stage 2 * Wheel Diameter * pi )
+	// Output Shaft to Encoder * Wheel Diameter * pi )
 	//For each inch moved, multiply by the constant to get rotations of cim
-	private double kDistHighGear = 1 / ((40 / 12D) * (44 / 40D) * 6 * Math.PI);
-	private double kDistLowGear = 1 / ((40 / 12D) * (60 / 24D) * 6 * Math.PI);
+	private double kDistLeft = -1 * 512d * 3d;
+	private double kDistRight = -1 * 128d * 3d;	
 
-	private double kMaxVelocity = 0;
-	private double calDist;
-	private Gear calGear;
-	private double rightStartDist;
-	private double leftStartDist;
-	
+	private double kPLow = 0;
+	private double kILow = 0;
+	private double kDLow = 0;
+	private double kFLow = 0;
+
+	private double kPHigh = 0;
+	private double kIHigh = 0;
+	private double kDHigh = 0;
+	private double kFHigh = 0;
 
 	public enum Gear {
 		High(Value.kReverse), 
@@ -57,6 +60,7 @@ public class Drivetrain extends Subsystem {
 		leftFront.configSelectedFeedbackSensor( FeedbackDevice.QuadEncoder, 0, 0);
 		rightFront.configSelectedFeedbackSensor( FeedbackDevice.QuadEncoder, 0, 0);
 
+
 		leftBack.set(ControlMode.Follower, leftFront.getDeviceID());
 		rightBack.set(ControlMode.Follower, rightFront.getDeviceID());
 
@@ -75,6 +79,10 @@ public class Drivetrain extends Subsystem {
 
 	public void arcadeDrive(double power, double curve, boolean squaredInputs) {
 		drivetrain.arcadeDrive(power, curve, squaredInputs);
+	}
+
+	public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
+		drivetrain.curvatureDrive(xSpeed, Math.signum(xSpeed)*zRotation, isQuickTurn);
 	}
 
 	public void arcadeVelocityControl(double power, double curve) {
@@ -115,10 +123,10 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void graphEncoders(){
-		SmartDashboard.putNumber("Left Encoder Pos: ", leftFront.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Encoder Vel: ",leftFront.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Right Encoder Pos: ", rightFront.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Encoder Vel: ", rightFront.getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Left Encoder Pos: ", leftFront.getSelectedSensorPosition(0)/kDistLeft);
+		SmartDashboard.putNumber("Left Encoder Vel: ", leftFront.getSelectedSensorVelocity(0)/kDistLeft);
+		SmartDashboard.putNumber("Right Encoder Pos: ", rightFront.getSelectedSensorPosition(0)/kDistRight);
+		SmartDashboard.putNumber("Right Encoder Vel: ", rightFront.getSelectedSensorVelocity(0)/kDistRight);
 	}
 
 	public void showCurrents(){
@@ -126,6 +134,15 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("PDP 1: ", Robot.pdp.getCurrent(1));
 		SmartDashboard.putNumber("PDP 2: ", Robot.pdp.getCurrent(2));
 		SmartDashboard.putNumber("PDP 3: ", Robot.pdp.getCurrent(3));
+	}
+
+	public void setEncoders(int pos) {
+		setEncoders(pos, pos);
+	}
+
+	public void setEncoders(int left, int right) {
+		leftFront.setSelectedSensorPosition(left, 0, 0);
+		rightFront.setSelectedSensorPosition(right, 0, 0);
 	}
 
 	/**
