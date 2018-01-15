@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 
 	public static Pneumatics pneumatics;
 	public static Drivetrain drivetrain;
+	public static LEDSubsystem ledSubsystem;
 	public static OI oi;
 	public static PowerDistributionPanel pdp;
 	public static I2C i2c;
@@ -41,10 +42,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		pneumatics = new Pneumatics();
 		drivetrain = new Drivetrain();
+		ledSubsystem = new LEDSubsystem();
 		pdp = new PowerDistributionPanel();
 		oi = new OI();
-
-		i2c = new I2C( Port.kMXP, 8);
 
 		chooser.addObject("Default Auto", new DriveStraightForever());
 		SmartDashboard.putData("Auto mode", chooser);
@@ -119,13 +119,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		byte[] b = {72};
-		byte[] c = new byte[1];
-		i2c.transaction(b, 1, c, 0);
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		ledSubsystem.sendRGB(0,255,0);
 	}
 
 	/**
